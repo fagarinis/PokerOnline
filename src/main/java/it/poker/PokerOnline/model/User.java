@@ -168,4 +168,16 @@ public class User {
 		return false;
 	}
 
+	public boolean containsRoleWithId(Long id) {
+		return this.ruoli.contains(new Role(id));
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", username=" + username + ", password="
+				+ password + ", dataRegistrazione=" + dataRegistrazione + ", stato=" + stato + ", esperienzaAccumulata="
+				+ esperienzaAccumulata + ", creditoAcc=" + creditoAcc + ", tavoloDiGioco=" + tavoloDiGioco
+				+ ", tavoliCreati=" + tavoliCreati + ", ruoli=" + ruoli + "]";
+	}
+
 }

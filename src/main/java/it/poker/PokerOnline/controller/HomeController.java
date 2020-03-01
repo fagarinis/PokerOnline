@@ -1,8 +1,5 @@
 package it.poker.PokerOnline.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,8 +55,6 @@ public class HomeController {
 		}
 		// metto l'utente in sessione
 		session.setAttribute("userInfo", userCheAccede);
-
-		// System.out.println(session.getAttribute("userInfo"));
 
 		return "/home";
 	}

@@ -30,7 +30,7 @@
 		</ul>
 		
 		 <ul class="nav navbar-nav navbar-right">
-            <li><p class="navbar-text">Utente: ${userInfo.username }(${userInfo.nome } ${userInfo.cognome })
+            <li><p class="navbar-text">Utente: ${userInfo.username }(${userInfo.nome } ${userInfo.cognome }) Credito: ${userInfo.creditoAcc } &euro;
             <a href="/logout">Logout</a></p> 
             </li>
           </ul>

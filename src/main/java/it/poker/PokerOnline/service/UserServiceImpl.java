@@ -1,6 +1,6 @@
 package it.poker.PokerOnline.service;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
+import it.poker.PokerOnline.model.Role;
 import it.poker.PokerOnline.model.User;
 import it.poker.PokerOnline.model.enm.StatoUser;
 import it.poker.PokerOnline.repository.UserRepository;
@@ -19,8 +20,13 @@ import it.poker.PokerOnline.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private final static Long PlayerRoleId = 2L;
+
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private RoleService roleService;
 
 	@Transactional(readOnly = true)
 	@Override
@@ -37,6 +43,29 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void aggiorna(User o) {
+		userRepository.save(o);
+	}
+
+	@Transactional
+	@Override
+	public void aggiornaConRuoli(User o) {
+
+		List<Role> ruoliUpdate = new ArrayList<>();
+		ruoliUpdate.addAll(o.getRuoli());
+
+		o.getRuoli().clear();
+		// scorro la lista di ruoli transient che contengono solo l'id
+		for (Role role : ruoliUpdate) {
+			Role ruolo = roleService.caricaSingolo(role.getId());
+			o.getRuoli().add(ruolo);
+		}
+
+		User userPersist = this.caricaSingoloConTavoli(o.getId());
+		o.setTavoliCreati(userPersist.getTavoliCreati());
+		o.setTavoloDiGioco(userPersist.getTavoloDiGioco());
+
+		o.setDataRegistrazione(userPersist.getDataRegistrazione());
+
 		userRepository.save(o);
 	}
 
@@ -77,6 +106,7 @@ public class UserServiceImpl implements UserService {
 		o.setDataRegistrazione(new Date());
 		o.setEsperienzaAccumulata(0L);
 		inserisciNuovo(o);
+		o.getRuoli().add(roleService.caricaSingolo(PlayerRoleId));// ruolo player
 
 		return o;
 	}
@@ -87,6 +117,40 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setUsername(username);
 		return !userRepository.exists(Example.of(user));
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public boolean usernameOccupatoDaDiversoId(Long idUser, String username) {
+		User userConStessoUsername = userRepository.findByUsername(username);
+
+		if (userConStessoUsername == null) {
+			return false;
+		}
+
+		if (userConStessoUsername.getId() == idUser) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public User caricaSingoloConRuoli(Long id) {
+		return userRepository.findByIdWithRoles(id).orElse(null);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public User caricaSingoloConTavoli(Long id) {
+		return userRepository.findByIdWithTables(id).orElse(null);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Long caricaIdTavoloDiGioco(Long userId) {
+		return userRepository.getIdOfPlayingTable(userId).orElse(null);
 	}
 
 }

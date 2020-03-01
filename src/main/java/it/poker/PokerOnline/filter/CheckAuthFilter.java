@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +22,7 @@ public class CheckAuthFilter implements Filter {
 	private static final String HOME_PATH = "/";
 	private static final String[] EXCLUDED_URLS = { "/registrati", "/eseguiRegistrazione", "/login", "/eseguiAccesso",
 			"/css/", "/js/" };
-	private static final String[] PROTECTED_URLS = { "/admin/" };
+	private static final String[] PROTECTED_URLS = { "/gestioneAmministrazione" };
 
 	public CheckAuthFilter() {
 	}
@@ -56,7 +55,7 @@ public class CheckAuthFilter implements Filter {
 			// controllo che utente abbia ruolo admin se nel path risulta presente /admin/
 			if (isPathForOnlyAdministrators(pathAttuale) && !utenteInSession.isAdmin()) {
 				httpRequest.setAttribute("messaggio", "Non si è autorizzati alla navigazione richiesta");
-				httpRequest.getRequestDispatcher("/home.jsp").forward(httpRequest, httpResponse);
+				httpRequest.getRequestDispatcher("/home").forward(httpRequest, httpResponse);
 				return;
 			}
 		}
