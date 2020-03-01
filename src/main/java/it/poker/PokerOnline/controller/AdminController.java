@@ -2,6 +2,7 @@ package it.poker.PokerOnline.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.poker.PokerOnline.dto.user.UserDTOInsert;
 import it.poker.PokerOnline.dto.user.UserDTOModifica;
 import it.poker.PokerOnline.model.Role;
 import it.poker.PokerOnline.model.User;
@@ -72,21 +74,19 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/ExecuteModifica", method = RequestMethod.POST)
-	public String prepareModifica(@Valid @ModelAttribute("userDTOModifica") UserDTOModifica userDTOModifica,
+	public String prepareModifica(HttpSession session, @Valid @ModelAttribute("userDTOModifica") UserDTOModifica userDTOModifica,
 			BindingResult bindingResult, Model model, @RequestParam(required = false) String[] ruolo) {
 
 		userDTOModifica.setRuoli(Role.buildRoleListFromIdRoleArray(ruolo));
-		
+
 		List<FieldError> errors = ValidationErrorsUtils.sorted(bindingResult.getFieldErrors());
-		
-		
+
 		if (userService.usernameOccupatoDaDiversoId(userDTOModifica.getId(), userDTOModifica.getUsername())) {
 			FieldError usernameNonDisponibileError = new FieldError("username", "username", "Username non disponibile");
 			errors.add(usernameNonDisponibileError);
 		}
 
 		if (!errors.isEmpty()) {
-			System.out.println(userDTOModifica);
 			addListaStati(model);
 			addListaRuoli(model);
 			model.addAttribute("utenteAttr", userDTOModifica);
@@ -94,10 +94,49 @@ public class AdminController {
 			return "/gestioneAmministrazione/modifica";
 		}
 		User userUpdate = UserDTOModifica.buildModelFromDTO(userDTOModifica);
-		
+
 		userService.aggiornaConRuoli(userUpdate);
+		//Aggiorna utente in sessione se viene modificato l'account dell'utente in sessione
+		if(userUpdate.getId() == ((User) session.getAttribute("userInfo")).getId()) {
+			session.setAttribute("userInfo", userService.caricaSingoloConRuoli(userUpdate.getId()));
+		}
 
 		model.addAttribute("messaggioConferma", "Modifica avvenuta con successo");
+		model.addAttribute("listaUtentiAttr", userService.listAll());
+		return "/gestioneAmministrazione/result";
+	}
+
+	@RequestMapping(value = "/PrepareInsert", method = RequestMethod.GET)
+	public String prepareInsert(Model model) {
+
+		addListaStati(model);
+		addListaRuoli(model);
+		return "/gestioneAmministrazione/insert";
+	}
+
+	@RequestMapping(value = "/ExecuteInsert", method = RequestMethod.POST)
+	public String executeInsert(@Valid @ModelAttribute("userDTOInsert") UserDTOInsert userDTOInsert,
+			BindingResult bindingResult, Model model, @RequestParam(required = false) String[] ruolo) {
+
+		userDTOInsert.setRuoli(Role.buildRoleListFromIdRoleArray(ruolo));
+		List<FieldError> errors = ValidationErrorsUtils.sorted(bindingResult.getFieldErrors());
+
+		if (!userService.usernameDisponibile(userDTOInsert.getUsername())) {
+			FieldError usernameNonDisponibileError = new FieldError("username", "username", "Username non disponibile");
+			errors.add(usernameNonDisponibileError);
+		}
+
+		if (!errors.isEmpty()) {
+			addListaRuoli(model);
+			model.addAttribute("utenteAttr", userDTOInsert);
+			model.addAttribute("utenteErrors", errors);
+			return "/gestioneAmministrazione/insert";
+		}
+		
+		User userInsert = UserDTOInsert.buildModelFromDTO(userDTOInsert);
+		userService.inserisciNuovoUser(userInsert, StatoUser.CREATO);
+
+		model.addAttribute("messaggioConferma", "Inserimento avvenuto con successo");
 		model.addAttribute("listaUtentiAttr", userService.listAll());
 		return "/gestioneAmministrazione/result";
 	}

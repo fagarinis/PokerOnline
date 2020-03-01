@@ -56,7 +56,7 @@
   			<div class="form-group">        
 		      <div class="col-sm-offset-2 col-sm-10">
 		        <button type="submit" class="btn btn-primary btn-md">Effettua Ricerca</button>
-		        <a href="/gestioneAmministrazione/prepareInsert" class="btn btn-primary btn-md">Inserisci Nuovo Utente</a>
+		        <a href="/gestioneAmministrazione/PrepareInsert" class="btn btn-primary btn-md">Inserisci Nuovo Utente</a>
 		      </div>
 		    </div>
 		    

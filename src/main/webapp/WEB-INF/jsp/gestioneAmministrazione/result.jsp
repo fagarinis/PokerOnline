@@ -36,7 +36,13 @@
 			
 				<c:forEach var="utenteItem" items="${listaUtentiAttr }">
 					<tr>
-						<td>${utenteItem.username }</td>
+						<td>
+						<c:if test="${utenteItem.stato == 'CREATO' }"><font color="gray"><i>${utenteItem.username}</i></font></c:if>
+						<c:if test="${utenteItem.stato == 'ATTIVO' }">${utenteItem.username}</c:if>
+						<c:if test="${utenteItem.stato == 'DISABILITATO' }"><font color="gray"><del>${utenteItem.username}</del></font></c:if>
+						
+						
+						</td>
 						<td><a
 							href="/gestioneAmministrazione/${utenteItem.id}/ExecuteDettaglio"
 							class="btn btn-info">Dettaglio</a> <a
@@ -50,8 +56,7 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 		
-				<a href="javascript:history.back()" class="btn btn-primary btn-md">Torna
-					Indietro</a>
+				<a href="/gestioneAmministrazione" class="btn btn-primary btn-md">Nuova Ricerca</a>
 			</div>
 		</div>
 

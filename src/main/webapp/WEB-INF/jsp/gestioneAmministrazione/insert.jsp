@@ -58,7 +58,7 @@ function isEmpty(str) {
 	<div class="alert alert-danger ${not empty utenteErrors?'':'d-none' }" role="alert">
 		<c:forEach var = "errorItem" items="${utenteErrors }">
         	<ul>
-				<li> ${errorItem }</li>	
+				<li>${errorItem.getField()}: ${errorItem.getDefaultMessage()}</li>
 			</ul>
       	</c:forEach>
 	</div>
@@ -67,25 +67,26 @@ function isEmpty(str) {
 
 
 
-      	<form onsubmit ="return validateUtenteForm()" class="form-horizontal" action="${pageContext.request.contextPath}/admin/ExecuteInsertUtenteServlet" method="post">
+      	<form  class="form-horizontal" action="/gestioneAmministrazione/ExecuteInsert/" method="post">
+      		
       		<div class="form-group">
       			<label class="control-label col-sm-2" for="nomeInputId">Nome:</label>
 	    		<div class="col-sm-4">
-					<input class="form-control" type="text" id="nomeInputId" name="nomeInput" 
+					<input class="form-control" type="text" id="nomeInputId" name="nome" 
 					value = "${utenteAttr.nome}">
 			 	</div>
   			</div>
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="cognomeInputId">Cognome:</label>
 	    		<div class="col-sm-4">
-					<input class="form-control" type="text" id="cognomeInputId" name="cognomeInput" 
+					<input class="form-control" type="text" id="cognomeInputId" name="cognome" 
 					value = "${utenteAttr.cognome}">
 			 	</div>
   			</div>
 			<div class="form-group">
       			<label class="control-label col-sm-2" for="usernameInputId">Username:</label>
 	    		<div class="col-sm-4">
-					<input class="form-control" type="text" id="usernameInputId" name="usernameInput" 
+					<input class="form-control" type="text" id="usernameInputId" name="username" 
 					value = "${utenteAttr.username}">
 			 	</div>
   			</div>
@@ -93,23 +94,23 @@ function isEmpty(str) {
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="passwordInputId">Password:</label>
 	    		<div class="col-sm-4">
-					<input class="form-control" type="password" id="passwordInputId" name="passwordInput" 
+					<input class="form-control" type="password" id="passwordInputId" name="password" 
 					value = "${utenteAttr.password}">
 			 	</div>
   			</div>
+  			
   			
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="ruoliInputId">Ruoli:</label>
 	    		<div class="col-sm-4">
 	    			<c:forEach var = "ruoloItem" items ="${ruoliListAttr}">
-	    			
 	    				<c:forEach var ="utenteRuoloItem" items ="${utenteAttr.ruoli}">
 	    					<c:if test="${ruoloItem.id == utenteRuoloItem.id}">
 	    						<c:set var = "check" value ="yes"/>
 	    					</c:if>
 	    				</c:forEach>
 	    			
-						<input <c:if test="${check =='yes'}">checked="checked"</c:if> type="checkbox" id="ruoloInputId" name="ruoloInput" value ="${ruoloItem.id}"> ${ruoloItem.descrizione} 
+						<input <c:if test="${check =='yes'}">checked="checked"</c:if> type="checkbox" id="ruoloInputId" name="ruolo" value ="${ruoloItem.id}"> ${ruoloItem.descrizione} 
 						
 						<c:set var = "check" value ="no"/>
 					</c:forEach>

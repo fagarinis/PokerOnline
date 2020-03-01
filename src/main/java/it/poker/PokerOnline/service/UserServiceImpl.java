@@ -1,5 +1,6 @@
 package it.poker.PokerOnline.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -151,6 +152,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Long caricaIdTavoloDiGioco(Long userId) {
 		return userRepository.getIdOfPlayingTable(userId).orElse(null);
+	}
+
+	@Transactional
+	@Override
+	public void inserisciNuovoUser(User userInsert, StatoUser stato) {
+		
+		userInsert.setStato(stato);
+		userInsert.setEsperienzaAccumulata(0L);
+		userInsert.setCreditoAcc(BigDecimal.ZERO);
+		userInsert.setDataRegistrazione(new Date());
+		this.inserisciNuovo(userInsert);
 	}
 
 }

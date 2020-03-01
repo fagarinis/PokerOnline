@@ -62,7 +62,7 @@ function isEmpty(str) {
 	</div>
 
 
-      	<form onsubmit ="return true" class="form-horizontal" action="/gestioneAmministrazione/ExecuteModifica" method="post">
+      	<form  class="form-horizontal" action="/gestioneAmministrazione/ExecuteModifica" method="post">
       		
       		<input class="form-control" type="hidden" id="idInputId" name="id" 
 					value = "${utenteAttr.id}">

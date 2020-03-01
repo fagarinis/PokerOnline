@@ -3,6 +3,7 @@ package it.poker.PokerOnline.service;
 import java.math.BigDecimal;
 
 import it.poker.PokerOnline.model.User;
+import it.poker.PokerOnline.model.enm.StatoUser;
 
 public interface UserService extends IBaseService<User> {
 
@@ -23,5 +24,7 @@ public interface UserService extends IBaseService<User> {
 	public void aggiornaConRuoli(User o);
 	
 	public Long caricaIdTavoloDiGioco(Long userId);
+
+	public void inserisciNuovoUser(User userInsert, StatoUser stato);
 
 }
