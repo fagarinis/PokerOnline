@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import it.poker.PokerOnline.model.enm.CodiceRuolo;
 import it.poker.PokerOnline.model.enm.StatoUser;
 
 @Entity
@@ -31,7 +33,9 @@ public class User {
 	private Long id;
 	private String nome;
 	private String cognome;
+	@Column(unique = true, nullable = false, length = 55)
 	private String username;
+	@Column(nullable = false, length = 200)
 	private String password;
 	@Temporal(TemporalType.DATE)
 	private Date dataRegistrazione;
@@ -153,6 +157,15 @@ public class User {
 
 	public void setRuoli(List<Role> ruoli) {
 		this.ruoli = ruoli;
+	}
+
+	public boolean isAdmin() {
+		for (Role role : this.getRuoli()) {
+			if (role.getCodice() == CodiceRuolo.ADMIN) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
