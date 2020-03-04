@@ -54,7 +54,6 @@ public class TavoloController {
 	@RequestMapping(value = "/ExecuteInsert", method = RequestMethod.POST)
 	public String executeInsert(@Valid @ModelAttribute("tavoloDTOInsert") TavoloDTOInsert tavoloDTOInsert,
 			BindingResult bindingResult, Model model) {
-		
 
 		List<FieldError> errors = ValidationErrorsUtils.sorted(bindingResult.getFieldErrors());
 

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 import it.poker.PokerOnline.model.Role;
+import it.poker.PokerOnline.model.Tavolo;
 import it.poker.PokerOnline.model.User;
 import it.poker.PokerOnline.model.enm.StatoUser;
 import it.poker.PokerOnline.repository.UserRepository;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private TavoloService tavoloService;
 
 	@Transactional(readOnly = true)
 	@Override
@@ -163,6 +167,22 @@ public class UserServiceImpl implements UserService {
 		userInsert.setCreditoAcc(BigDecimal.ZERO);
 		userInsert.setDataRegistrazione(new Date());
 		this.inserisciNuovo(userInsert);
+	}
+
+	@Transactional
+	@Override
+	public void aggiungiCredito(Long idUser, BigDecimal cifra) {
+		User user = this.caricaSingolo(idUser);
+		user.setCreditoAcc(user.getCreditoAcc().add(cifra));
+	}
+
+	@Transactional
+	@Override
+	public void giocaSuTavolo(User userInSessione, Long idTavolo) {
+		User userPersist = this.caricaSingolo(userInSessione.getId());
+		Tavolo tavoloDiGioco = tavoloService.caricaSingolo(idTavolo);
+		
+		userPersist.setTavoloDiGioco(tavoloDiGioco);
 	}
 
 }

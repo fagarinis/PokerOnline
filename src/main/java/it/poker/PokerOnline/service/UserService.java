@@ -27,4 +27,8 @@ public interface UserService extends IBaseService<User> {
 
 	public void inserisciNuovoUser(User userInsert, StatoUser stato);
 
+	public void aggiungiCredito(Long idUser, BigDecimal cifra);
+
+	public void giocaSuTavolo(User userInSessione, Long id);
+
 }

@@ -74,7 +74,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/ExecuteModifica", method = RequestMethod.POST)
-	public String prepareModifica(HttpSession session, @Valid @ModelAttribute("userDTOModifica") UserDTOModifica userDTOModifica,
+	public String executeModifica(HttpSession session, @Valid @ModelAttribute("userDTOModifica") UserDTOModifica userDTOModifica,
 			BindingResult bindingResult, Model model, @RequestParam(required = false) String[] ruolo) {
 
 		//TODO controllo lastAdmin per verificare che l'utente che si disabilita/modifica non sia l'ultimo admin
