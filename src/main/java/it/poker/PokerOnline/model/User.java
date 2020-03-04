@@ -168,6 +168,16 @@ public class User {
 		return false;
 	}
 
+	public boolean isPlayer() {
+		for (Role role : this.getRuoli()) {
+			if (role.getCodice() == CodiceRuolo.PLAYER || role.getCodice() == CodiceRuolo.SPECIAL_PLAYER) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+
 	public boolean containsRoleWithId(Long id) {
 		return this.ruoli.contains(new Role(id));
 	}

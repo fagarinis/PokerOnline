@@ -18,19 +18,20 @@
 			class="alert alert-danger ${messaggio!=null?'':'d-none' }"
 			role="alert">${messaggio }</div>
    	
-   	
+   		<c:if test="${userInfo.isAdmin() }">
        	 <div class="jumbotron">
       		<div class="container">
        	 		<h1 class="display-4"> Gestione Amministrazione </h1>
        	 		<p><a class="btn btn-primary btn-lg" href="/gestioneAmministrazione" role="button">Vai alla Gestione &raquo;</a></p>
      	 	</div>
      	 </div>
+     	 </c:if>
      	 
      
     	 <div class="jumbotron">
       		<div class="container">
-       	 		<h1 class="display-4"> Gestione Tavolo</h1>
-       	 		<p><a class="btn btn-primary btn-lg" href="/tavolo" role="button">Vai alla Gestione &raquo;</a></p>
+       	 		<h1 class="display-4"> I Miei Tavoli</h1>
+       	 		<p><a class="btn btn-primary btn-lg" href="/imieitavoli" role="button">Vai alla Gestione &raquo;</a></p>
      	 	</div>
      	 </div>
      
@@ -38,7 +39,7 @@
        	 <div class="jumbotron">
       		<div class="container">
        	 		<h1 class="display-4"> Play Management</h1>
-       	 		<p><a class="btn btn-primary btn-lg" href="/playManagement" role="button">Gioca &raquo;</a></p>
+       	 		<p><a class="btn btn-primary btn-lg" href="/play" role="button">Gioca &raquo;</a></p>
      	 	</div>
      	 </div>
      	 

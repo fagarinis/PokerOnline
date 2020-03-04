@@ -1,5 +1,6 @@
 package it.poker.PokerOnline.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class Tavolo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long esperienzaMin; // esperienza minima richiesta per entrare al tavolo
-	private Long cifraMinimaPerEntrare;
+	private BigDecimal cifraMinimaPerEntrare;
 	private String denominazione;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCreazione;
@@ -35,6 +36,12 @@ public class Tavolo {
 
 	@OneToMany(mappedBy = "tavoloDiGioco")
 	private List<User> usersGiocatori = new ArrayList<>();
+
+	@Override
+	public String toString() {
+		return "Tavolo [id=" + id + ", esperienzaMin=" + esperienzaMin + ", cifraMinimaPerEntrare="
+				+ cifraMinimaPerEntrare + ", denominazione=" + denominazione + ", dataCreazione=" + dataCreazione + "]";
+	}
 
 	public Tavolo() {
 	}
@@ -59,11 +66,11 @@ public class Tavolo {
 		this.esperienzaMin = esperienzaMin;
 	}
 
-	public Long getCifraMinimaPerEntrare() {
+	public BigDecimal getCifraMinimaPerEntrare() {
 		return cifraMinimaPerEntrare;
 	}
 
-	public void setCifraMinimaPerEntrare(Long cifraMinimaPerEntrare) {
+	public void setCifraMinimaPerEntrare(BigDecimal cifraMinimaPerEntrare) {
 		this.cifraMinimaPerEntrare = cifraMinimaPerEntrare;
 	}
 
