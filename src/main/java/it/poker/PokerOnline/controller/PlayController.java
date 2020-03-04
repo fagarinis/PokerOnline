@@ -15,8 +15,6 @@ import it.poker.PokerOnline.service.TavoloService;
 @RequestMapping("/play")
 public class PlayController {
 
-	@Autowired
-	private TavoloService tavoloService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String homePlay(Model model) {

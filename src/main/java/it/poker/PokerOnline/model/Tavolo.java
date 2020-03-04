@@ -105,5 +105,9 @@ public class Tavolo {
 	public void setUsersGiocatori(List<User> usersGiocatori) {
 		this.usersGiocatori = usersGiocatori;
 	}
+	
+	public boolean hasPlayersIn() {
+		return this.usersGiocatori.size() > 0;
+	}
 
 }

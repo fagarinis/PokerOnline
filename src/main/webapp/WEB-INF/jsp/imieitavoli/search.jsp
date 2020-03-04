@@ -46,6 +46,7 @@
   			
   			<div class="form-group">        
 		      <div class="col-sm-offset-2 col-sm-10">
+		      <a href="/imieitavoli/" class="btn btn-primary btn-md">Annulla</a>
 		        <button type="submit" class="btn btn-primary btn-md">Effettua Ricerca Tra I Miei Tavoli</button>
 		      </div>
 		    </div>

@@ -1,9 +1,20 @@
 package it.poker.PokerOnline.dto.tavolo;
 
+import java.math.BigDecimal;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import it.poker.PokerOnline.model.Tavolo;
+
 public class TavoloDTOInsert {
 
+	@NotNull(message = "Il campo non può essere vuoto")
 	private Long esperienzaMin; // esperienza minima richiesta per entrare al tavolo
-	private Long cifraMinimaPerEntrare;
+	@NotNull(message = "Il campo non può essere vuoto")
+	private BigDecimal cifraMinimaPerEntrare;
+	@NotBlank(message = "Il campo denominazione non può essere vuoto")
 	private String denominazione;
 
 	public Long getEsperienzaMin() {
@@ -14,11 +25,11 @@ public class TavoloDTOInsert {
 		this.esperienzaMin = esperienzaMin;
 	}
 
-	public Long getCifraMinimaPerEntrare() {
+	public BigDecimal getCifraMinimaPerEntrare() {
 		return cifraMinimaPerEntrare;
 	}
 
-	public void setCifraMinimaPerEntrare(Long cifraMinimaPerEntrare) {
+	public void setCifraMinimaPerEntrare(BigDecimal cifraMinimaPerEntrare) {
 		this.cifraMinimaPerEntrare = cifraMinimaPerEntrare;
 	}
 
@@ -28,6 +39,15 @@ public class TavoloDTOInsert {
 
 	public void setDenominazione(String denominazione) {
 		this.denominazione = denominazione;
+	}
+
+	public static Tavolo buildModelFromDTO(TavoloDTOInsert tavoloDTOInsert) {
+		Tavolo tavolo = new Tavolo();
+		tavolo.setEsperienzaMin(tavoloDTOInsert.getEsperienzaMin());
+		tavolo.setCifraMinimaPerEntrare(tavoloDTOInsert.getCifraMinimaPerEntrare());
+		tavolo.setDenominazione(tavoloDTOInsert.getDenominazione());
+
+		return tavolo;
 	}
 
 }

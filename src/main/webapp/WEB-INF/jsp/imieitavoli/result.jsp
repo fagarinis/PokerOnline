@@ -23,6 +23,11 @@
 		<div
 			class="alert alert-success ${messaggioConferma!=null?'':'d-none' }"
 			role="alert">${messaggioConferma }</div>
+			
+		<%-- alert errore --%>
+		<div
+			class="alert alert-danger ${messaggioErrore!=null?'':'d-none' }"
+			role="alert">${messaggioErrore }</div>
 
 		<table class="table table-striped">
 			<thead>
@@ -60,8 +65,10 @@
 		</table>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-		
+				
 				<a href="/imieitavoli/PrepareSearch" class="btn btn-primary btn-md">Nuova Ricerca</a>
+				<a href="/imieitavoli/PrepareInsert" class="btn btn-primary btn-md">Crea Nuovo Tavolo</a><br><br>
+		        
 			</div>
 		</div>
 
